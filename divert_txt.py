@@ -43,8 +43,8 @@ def translate(fdir,lists):
     for jpg in lists:
         print(jpg)
         if jpg[-4:] == '.jpg':
-            image= cv2.imread(jpg)#路径不能有中文
-            h,w,_ = image.shape #图片大小
+            image= cv2.imread(jpg)	#路径不能有中文
+            h,w,_ = image.shape 	#图片大小
 #            cv2.imshow('1',image)
 #            cv2.waitKey(1000)
 #            cv2.destroyAllWindows()
@@ -62,11 +62,11 @@ def translate(fdir,lists):
             fxml.write(out0 % source)
             txt = jpg.replace('.jpg','.txt')
 
-            if not os.path.getsize(txt):
+            if not os.path.getsize(txt):#判断文件是否为空白文件
                 fxml.write(out2)
                 continue
 
-            lines = np.loadtxt(txt)#读入txt存为数组
+            lines = np.loadtxt(txt)	#读入txt存为数组
             #print(type(lines))
 
             if len(np.array(lines).shape) == 1:
@@ -79,9 +79,9 @@ def translate(fdir,lists):
                     
                 '''把txt上的第一列（类别）转成xml上的类别
                    我这里是labelimg标1、2、3，对应txt上面的0、1、2'''
-                label['class'] = str(int(box[0])+1) #类别索引从1开始
+                label['class'] = str(int(box[0])+1) 	#类别索引从1开始
                 
-                '''把txt上的数字（归一化）转成xml上框的坐标'''
+                #把txt上的数字（归一化）转成xml上框的坐标
                 xmin = float(box[1] - 0.5*box[3])*w
                 ymin = float(box[2] - 0.5*box[4])*h
                 xmax = float(xmin + box[3]*w)
@@ -101,7 +101,7 @@ def translate(fdir,lists):
                 fxml.write(out2)
 
 if __name__ == '__main__':
-    file_dir = 'E:\Code\IMAGE\Train\Train\Image'#
+    file_dir = 'Image'			#文件路径
     lists=[]
     for i in os.listdir(file_dir):
         if i[-3:]=='jpg':
